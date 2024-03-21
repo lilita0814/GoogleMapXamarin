@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+              xmlns:syncfusion1="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             x:Class="GoogleMapXamarin.View.RestaurantDetailPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" Spacing="0">
+
+
+            <!--  name  -->
+            <Frame Padding="0">
+                <Label Text="{Binding name}" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" FontAttributes="Bold" Padding="10" BackgroundColor="LightBlue"></Label>
+            </Frame>
+
+            <!--  scroll  -->
+            <ScrollView VerticalOptions="FillAndExpand" Orientation="Vertical">
+                <StackLayout>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                        </Grid.RowDefinitions>
+                        <!--  image  -->
+                        <CollectionView ItemsSource="{Binding photosReference}" HorizontalOptions="FillAndExpand" ItemsLayout="HorizontalList">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" WidthRequest="200" Spacing="0">
+                                        <Image Source="{Binding url}" Aspect="AspectFill" HeightRequest="150" HorizontalOptions="FillAndExpand">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding onTapImage}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <BoxView WidthRequest="1" VerticalOptions="FillAndExpand" Margin="0" BackgroundColor="DarkGray"></BoxView>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+
+                    <!--  content  -->
+                    <StackLayout HorizontalOptions="FillAndExpand" Padding="10">
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <!--  open status  -->
+                            <Label Text="{Binding openStatus}" HorizontalOptions="StartAndExpand" TextColor="{Binding openStatusColor}" FontSize="15" FontAttributes="Bold"></Label>
+                            <!--  distance  -->
+                            <Label FontSize="15" HorizontalOptions="EndAndExpand" FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding distance}"></Span>
+                                        <Span Text=" km"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                        <!--  rating  -->
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Rating: "></Span>
+                                    <Span Text="{Binding rating}"></Span>
+                                    <Span Text=" ★"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--  price level  -->
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Price level: "></Span>
+                                    <Span Text="{Binding get_price_level_dollar}" FontAttributes="Bold"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--  spacing  -->
+                        <Label />
+
+                        <!--  address  -->
+                        <Label Text="{Binding formatted_address}"></Label>
+
+                        <!--  address function  -->
+                        <ScrollView Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal">
+                                <!--  copy address  -->
+                                <Button:SfButton x:Name="copyButton" ImageSource="copy_icon.jpg" Command="{Binding copyAddress}" CommandParameter="{x:Reference copyButton}" Text="Copy" TextColor="Black" ImageWidth="30" ShowIcon="True" BorderColor="LightGray" BorderWidth="1" CornerRadius="10" HorizontalOptions="Start" BackgroundColor="White"/>
+                                <!--  generate QR  -->
+                                <Button:SfButton ImageSource="qr_generate_icon.jpg" Command="{Binding generateQr}" Text="Generate QR" TextColor="Black" ImageWidth="30" ShowIcon="True" BorderColor="LightGray" BorderWidth="1" CornerRadius="10" HorizontalOptions="Start" BackgroundColor="White"/>
+                                <!--  open on google map  -->
+                                <Button:SfButton Text="Google Map" FontSize="15"  Command="{Binding openOnMapButton}" TextColor="Black" Padding="10" CornerRadius="10" VerticalOptions="FillAndExpand" HorizontalOptions="End" ShowIcon="True" ImageSource="google_map.png" ImageWidth="30">
+                                    <Button:SfButton.BackgroundGradient>
+                                        <gradient:SfRadialGradientBrush Radius="1.5">
+                                            <gradient:SfRadialGradientBrush.GradientStops>
+                                                <gradient:SfGradientStop Color="#ed616e" Offset="0"/>
+                                                <gradient:SfGradientStop Color="#de3142" Offset="1"/>
+                                            </gradient:SfRadialGradientBrush.GradientStops>
+                                        </gradient:SfRadialGradientBrush>
+                                    </Button:SfButton.BackgroundGradient>
+                                </Button:SfButton>
+                            </StackLayout>
+                        </ScrollView>
+
+                        <!--  map  -->
+                        <Frame Padding="0" CornerRadius="5">
+                            <syncfusion1:SfExpander AnimationEasing="SinIn">
+                                <syncfusion1:SfExpander.Header>
+                                    <StackLayout>
+                                        <Label Text="Map" FontSize="15" Padding="5" TextColor="Black"></Label>
+                                    </StackLayout>
+                                </syncfusion1:SfExpander.Header>
+                                <syncfusion1:SfExpander.Content>
+                                    <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="200">
+                                        <maps:Map x:Name="formMap" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsShowingUser="True" HasScrollEnabled="False">
+                                        </maps:Map>
+                                    </AbsoluteLayout>
+                                </syncfusion1:SfExpander.Content>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup>
+                                            <VisualState Name="Collapsed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="HeaderBackgroundColor" Value="White"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+                            </syncfusion1:SfExpander>
+                        </Frame>
+
+                        <!--  Business Hours  -->
+                        <Frame Margin="0,10" CornerRadius="5" Padding="0">
+                            <syncfusion1:SfExpander AnimationEasing="Linear">
+                                <syncfusion1:SfExpander.Header>
+                                    <StackLayout>
+                                        <Label Text="Business Hours" FontSize="15" Padding="5" TextColor="Black"></Label>
+                                    </StackLayout>
+                                </syncfusion1:SfExpander.Header>
+                                <syncfusion1:SfExpander.Content>
+                                    <StackLayout BackgroundColor="White" Padding="15,10">
+                                        <syncfusion:SfListView ItemsSource="{Binding weekday_text}" IsScrollingEnabled="False" IsEnabled="False" AutoFitMode="DynamicHeight" IsScrollBarVisible="False">
+                                            <syncfusion:SfListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout>
+                                                        <Label Text="{Binding text}"  TextColor="{Binding textColor}"></Label>
+                                                        <BoxView IsVisible="{Binding visible}" BackgroundColor="LightGray" Margin="0,5" HeightRequest="1"></BoxView>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </syncfusion:SfListView.ItemTemplate>
+                                        </syncfusion:SfListView>
+                                    </StackLayout>
+                                </syncfusion1:SfExpander.Content>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup>
+                                            <VisualState Name="Expanded">
+                                                <VisualState.Setters>
+                                                    <Setter Property="HeaderBackgroundColor" Value="LightGray"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState Name="Collapsed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="HeaderBackgroundColor" Value="White"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+                            </syncfusion1:SfExpander>
+                        </Frame>
+
+                        <!--  reviews  -->
+                        <syncfusion:SfListView ItemsSource="{Binding reviews}" IsEnabled="False" AutoFitMode="DynamicHeight" AllowSwiping="True" ItemSpacing="6" x:Name="reviewsList" IsScrollingEnabled="False">
+                            <syncfusion:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="6"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <!--  comment  -->
+                                            <Image Source="{Binding profile_photo_url}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" VerticalOptions="StartAndExpand"></Image>
+                                            <Label Text="{Binding author_name}" Grid.Column="1" Grid.Row="0"></Label>
+                                            <Label FontSize="15" Grid.Column="1" Grid.Row="1" VerticalTextAlignment="Start" TranslationY="-10">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding getFullRatingStar}" TextColor="Goldenrod"></Span>
+                                                        <Span Text="{Binding getEmptyRatingStar}" TextColor="DarkSlateGray"></Span>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Text="{Binding text}" Grid.Column="1" Grid.Row="2"></Label>
+                                            <Label Text="{Binding relative_time_description}" Grid.Column="1" Grid.Row="3" HorizontalOptions="EndAndExpand"></Label>
+                                            <BoxView BackgroundColor="LightGray" Grid.ColumnSpan="2" Grid.Row="4" VerticalOptions="EndAndExpand" HeightRequest="1"></BoxView>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </syncfusion:SfListView.ItemTemplate>
+                        </syncfusion:SfListView>
+
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <!--  button  -->
+            <StackLayout Padding="20,10" Orientation="Horizontal" HeightRequest="60">
+                <!--  back to result  -->
+                <Button:SfButton Text="Back to result page" FontSize="15" CornerRadius="10" BackgroundColor="gold" Command="{Binding backButton}" TextColor="Black" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></Button:SfButton>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

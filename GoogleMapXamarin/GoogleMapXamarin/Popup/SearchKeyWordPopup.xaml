@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="http://rotorgames.com" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:animations="http://rotorgames.com" xmlns:SfButton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                  x:Class="GoogleMapXamarin.Popup.SearchKeyWordPopup">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="500"
+                              DurationOut="500"
+                              EasingIn="SpringIn"
+                              EasingOut="SpringOut"
+                              HasBackgroundAnimation="True"
+                              PositionIn="Center"
+                              PositionOut="Center"
+                              ScaleIn="1.2"
+                              ScaleOut="0.8">
+
+        </animations:ScaleAnimation>
+    </pages:PopupPage.Animation>
+
+    <Frame HorizontalOptions="Center" VerticalOptions="Center" Margin="40, 120" CornerRadius="5">
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <!--  selected key word  -->
+            <Label Text="Keyword" />
+            <Frame BackgroundColor="#F4F1F5" CornerRadius="5" Padding="0">
+                <StackLayout>
+                    <CollectionView ItemsSource="{Binding SelectedTags}" x:Name="selectedTagView" ItemsLayout="VerticalGrid,2">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <SfButton:SfButton Padding="10,10,10,0" BackgroundColor="Transparent" Clicked="remove_keyword" CommandParameter="{Binding }">
+                                    <Frame BackgroundColor="LightGreen" Padding="10" CornerRadius="10">
+                                        <AbsoluteLayout HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding }" TextColor="Black" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0.5,0.9,1"></Label>
+                                            <Label Text="x" TextColor="DarkGreen" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,0.5,0.1,1"></Label>
+                                        </AbsoluteLayout>
+                                    </Frame>
+                                </SfButton:SfButton>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+            <!--  spacing  -->
+            <BoxView />
+            <!--  key word area  -->
+            <Frame CornerRadius="5" Padding="15" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                <StackLayout x:Name="TagArea">
+            </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Frame>
+
+</pages:PopupPage>

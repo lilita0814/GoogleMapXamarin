@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms" xmlns:SButton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             x:Class="GoogleMapXamarin.MainPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <!--  tabview  -->
+            <tabView:SfTabView x:Name="tabView" SelectedIndex="{Binding tabViewIndex}" EnableSwiping="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" DisplayMode="NoHeader">
+                <!--  map tabview  -->
+                <tabView:SfTabItem>
+                    <tabView:SfTabItem.Content>
+                        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                            <!--  map  -->
+                            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,0.7">
+                                <maps:Map x:Name="formMap" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsShowingUser="True">
+                                </maps:Map>
+                            </StackLayout>
+
+                            <!--  option  -->
+                            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.3" BackgroundColor="SteelBlue">
+                                <BoxView BackgroundColor="#1E5FA6" HeightRequest="10"></BoxView>
+                                <!--  title  -->
+                                <Label Text="Search nearby restaurants" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" TextColor="GhostWhite" FontAttributes="Bold" FontSize="20"></Label>
+                                <!--  search condition  -->
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                    <!--  search keyword  -->
+                                    <StackLayout VerticalOptions="EndAndExpand">
+                                        <SButton:SfButton Command="{Binding openSearchKeyword}" Text="Keyword" FontSize="20" CornerRadius="10" FontFamily="Sans" BackgroundColor="Goldenrod" TextColor="Black"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <!--  button area  -->
+                                <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="20, 10" Spacing="10" Orientation="Horizontal">
+                                    <!--  search button  -->
+                                    <SButton:SfButton BackgroundColor="GhostWhite" TextColor="Black" CornerRadius="20" Text="Search" Command="{Binding searchNearbyRestaurantButton}" HorizontalOptions="FillAndExpand" ShowIcon="{Binding searchButtonIconVisible}" ImageWidth="40" ImageAlignment="Left">
+                                        <SButton:SfButton.Image>
+                                            <Image Source="magnifier_search_icon.gif" IsAnimationPlaying="True"></Image>
+                                        </SButton:SfButton.Image>
+                                    </SButton:SfButton>
+                                    <!--  go to result button  -->
+                                    <Button BackgroundColor="YellowGreen" CornerRadius="20" Text="Check Result" Command="{Binding goToResultButton}"></Button>
+                                </StackLayout>
+                            </StackLayout>
+
+                        </AbsoluteLayout>
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+
+
+                <!--  tab 2  -->
+
+
+                <!--  search result tabview  -->
+                <tabView:SfTabItem>
+                    <tabView:SfTabItem.Content>
+                        <!-- page 2 -->
+                        <!--  search result  -->
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="0">
+                            <!--  title  -->
+                            <AbsoluteLayout HeightRequest="40" HorizontalOptions="FillAndExpand" BackgroundColor="#1876D0">
+                                <Label AbsoluteLayout.LayoutBounds="0.5,0" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="20" FontAttributes="Bold" TextColor="Black" VerticalTextAlignment="Center" VerticalOptions="FillAndExpand">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Search result"></Span>
+                                            <Span Text=" ("></Span>
+                                            <Span Text="{Binding resultCount}"></Span>
+                                            <Span Text=" results)"></Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </AbsoluteLayout>
+                            <!--  content  -->
+                            <CollectionView VerticalOptions="Fill" HorizontalOptions="FillAndExpand" ItemsSource="{Binding results}" RemainingItemsThresholdReachedCommand="{Binding addNextPageResult}" RemainingItemsThreshold="3">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <!--  item  -->
+                                        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="10,10,10,0">
+                                            <!--  tap go restaurant detail  -->
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding tapOpenRestaurantPage}" />
+                                            </StackLayout.GestureRecognizers>
+                                            <!--  name  -->
+                                            <Label Text="{Binding name}" FontSize="20" LineBreakMode="WordWrap" HorizontalOptions="FillAndExpand" Margin="0,0,0,10" InputTransparent="True"></Label>
+                                            <AbsoluteLayout Padding="0,10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                <!--  tap go restaurant detail  -->
+                                                <AbsoluteLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding tapOpenRestaurantPage}" />
+                                                </AbsoluteLayout.GestureRecognizers>
+                                                <!--  info  -->
+                                                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,0.6,1" InputTransparent="True">
+                                                    <!--  rating  -->
+                                                    <Label VerticalTextAlignment="Center">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding rating}"></Span>
+                                                                <Span Text=" ★"></Span>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                    <!--  distance  -->
+                                                    <Label LineBreakMode="WordWrap">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding distance}"></Span>
+                                                                <Span Text=" km"></Span>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                    <!--  business status  -->
+                                                    <Label Text="{Binding business_status}" TextColor="{Binding business_status_color}" FontAttributes="Bold"></Label>
+                                                    <!--  business time  -->
+                                                    <Label Text="{Binding business_time}"></Label>
+                                                </StackLayout>
+                                                <!--  image reference  -->
+                                                <Image Source="{Binding imageReference}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,0,0.4,1" HorizontalOptions="CenterAndExpand" Aspect="AspectFill" WidthRequest="150" HeightRequest="100">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding onTapImage}"></TapGestureRecognizer>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </AbsoluteLayout>
+                                            <!--  border line  -->
+                                            <BoxView Color="LightGray" HeightRequest="1"></BoxView>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <!--  button  -->
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End" Orientation="Horizontal">
+                                <Button Text="Back to Map" Command="{Binding backToMapButton}" HorizontalOptions="FillAndExpand" Margin="20,10" BackgroundColor="Orange" CornerRadius="10"></Button>
+                            </StackLayout>
+                        </StackLayout>
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+            </tabView:SfTabView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

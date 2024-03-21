@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:animations="http://rotorgames.com"
+             x:Class="GoogleMapXamarin.Popup.FitImage" BackgroundColor="#99000000">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="500"
+                              DurationOut="500"
+                              EasingIn="SpringIn"
+                              EasingOut="SpringOut"
+                              HasBackgroundAnimation="True"
+                              PositionIn="Center"
+                              PositionOut="Center"
+                              ScaleIn="1.2"
+                              ScaleOut="0.8">
+
+        </animations:ScaleAnimation>
+    </pages:PopupPage.Animation>
+
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="20">
+
+        <Image x:Name="showImage" Aspect="AspectFit" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"></Image>
+
+    </StackLayout>
+    
+    
+    
+</pages:PopupPage>
