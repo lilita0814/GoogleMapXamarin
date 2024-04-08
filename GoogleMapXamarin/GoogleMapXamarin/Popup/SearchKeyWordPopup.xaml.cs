@@ -19,7 +19,7 @@ namespace GoogleMapXamarin.Popup
         public SearchKeyWordPageModel pageModel = new SearchKeyWordPageModel();
         private ObservableCollection<string> keywords = new ObservableCollection<string>()
         {
-            "Vegetarian", "Halal", "Fast food", "Japanese", "Chinese", "Sea Food"
+            "Vegetarian", "Halal", "Fast food", "Japanese", "Chinese", "SeaFood"
         };
 
         public SearchKeyWordPopup()
@@ -50,7 +50,8 @@ namespace GoogleMapXamarin.Popup
                     HorizontalOptions = LayoutOptions.Center,
                     TextColor = Color.Black,
                     CornerRadius = 10,
-                    BackgroundColor = Color.LightGreen
+                    BackgroundColor = Color.LightGreen,
+                    HorizontalTextAlignment = TextAlignment.Center
                 };
                 button.Clicked += clickTag;
 
@@ -71,7 +72,8 @@ namespace GoogleMapXamarin.Popup
                     newLayout = new StackLayout()
                     {
                         Orientation = StackOrientation.Horizontal,
-                        Spacing = 5
+                        Spacing = 5,
+                        HorizontalOptions = LayoutOptions.FillAndExpand
                     };
                 }
             });

@@ -41,9 +41,11 @@
             <!--  spacing  -->
             <BoxView />
             <!--  key word area  -->
-            <Frame CornerRadius="5" Padding="15" BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                <StackLayout x:Name="TagArea">
-            </StackLayout>
+            <Frame CornerRadius="5" Padding="15" HeightRequest="200" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ScrollView HorizontalOptions="FillAndExpand" Orientation="Both" VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Default">
+                    <StackLayout x:Name="TagArea" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    </StackLayout>
+                </ScrollView>
             </Frame>
         </StackLayout>
     </Frame>

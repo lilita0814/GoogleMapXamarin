@@ -27,9 +27,11 @@ namespace GoogleMapXamarin.PageModel
             //  in requesting api
             if (isRequestingApi)
                 return;
-            isRequestingApi = true;
             AppData.CurrentlyLocation = null;
             AppData.CurrentlyLocation = await AppData.getCurrentlyLocation();
+            if (AppData.CurrentlyLocation == null)
+                return;
+            isRequestingApi = true;
             //  no location
             if (AppData.CurrentlyLocation == null)
                 return;
